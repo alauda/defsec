@@ -12,23 +12,28 @@ import (
 	"github.com/open-policy-agent/opa/bundle"
 )
 
-func init() {
+// Trivy uses this initialization function when resources are low,
+// which will cause trivy to run slowly. The trivy in our harbor does
+// not use the function of this module, so the current init function
+// is commented and adjusted.
+//
+// func init() {
 
-	modules, err := loadEmbeddedPolicies()
-	if err != nil {
-		// we should panic as the policies were not embedded properly
-		panic(err)
-	}
-	loadedLibs, err := loadEmbeddedLibraries()
-	if err != nil {
-		panic(err)
-	}
-	for name, policy := range loadedLibs {
-		modules[name] = policy
-	}
+// 	modules, err := loadEmbeddedPolicies()
+// 	if err != nil {
+// 		// we should panic as the policies were not embedded properly
+// 		panic(err)
+// 	}
+// 	loadedLibs, err := loadEmbeddedLibraries()
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	for name, policy := range loadedLibs {
+// 		modules[name] = policy
+// 	}
 
-	RegisterRegoRules(modules)
-}
+// 	RegisterRegoRules(modules)
+// }
 
 func RegisterRegoRules(modules map[string]*ast.Module) {
 	ctx := context.TODO()
